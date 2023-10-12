@@ -30,11 +30,26 @@ function buildcharts(sample_id){
             type: 'bar',
             orientation:"h"
         }
-        Plotly.newPlot("bar",[tracebar],[])
+        Plotly.newPlot("bar",[tracebar],[]);
         
+        let traceBubble= {
+            x: sample.otu_ids,
+            y: sample.sample_values,
+            mode: 'markers',
+            marker: {
+                size: sample.sample_values,
+                color: sample.otu_ids,
+            },
+            text: sample.otu_labels
+        };
+        let layout= {
+            xaxis: {title: 'OTU IDs'}
+        };
+        Plotly.newPlot("bubble",[traceBubble],layout);
 
     });
 }
+
 function buildmetadata(sample_id){
     d3.json(url).then(function(data) {
         var meta_data_list= data.metadata
